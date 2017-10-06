@@ -9,21 +9,29 @@ var candies = [
 	{"id":4,"name":"Candy Stick","color":"Blue"}
 ];
 
+// Index
 router.get('/', function(req,res) {
 	res.json(candies);
 });
 
-
+// Show
 router.get('/:id', function(req, res) {
 	var myCandy = req.params.id;
-	res.json(candies[myCandy - 1]);
+	for (let i = 0; i < candies.length; i++) {
+		if (myCandy == candies[i].id){
+			res.json(candies[i]);
+		}
+	}
+	res.json({message: "Couldn't find Candy"});
 });
 
+// Create
 router.post('/', function(req, res) {
 	candies.push(req.body);
 	res.json(candies[candies.length-1]);
 });
 
+// Update
 router.put('/:id', function(req, res) {
 	var newCandy = req.params.id;
 	for (var i = 0; i < candies.length; i++) {
@@ -33,9 +41,9 @@ router.put('/:id', function(req, res) {
 		}
 	}
 	res.send("Updated!");
-
 });
 
+// Destroy
 router.delete('/:id', function(req, res) {
 	var dumpCandy = req.params.id;
 	for (var i = 0; i < candies.length; i++) {
